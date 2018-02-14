@@ -1,0 +1,49 @@
+'use strict';
+
+const table = document.querySelector('#tbl');
+const cells = table.querySelectorAll('td');
+const rows = table.querySelectorAll('tr');
+let selectedCell = -1;
+let selectedRow = -1;
+
+(function(){
+   for(var i=0; i< cells.length; i++){
+       cells[i].addEventListener('click', clickCell);
+   }
+}())
+
+function clickCell(e){
+    if(e.target.classList.contains('block')){
+        return;
+    }
+
+    clearTableBg();
+    e.target.parentNode.classList.add('bg-row');
+    setTableBgColumn(e.target.cellIndex);
+    selectedCell = e.target.cellIndex;
+    selectedRow = e.target.parentNode.rowIndex;
+    rows[selectedRow].cells[selectedCell].classList.add('bg-active');
+}
+
+function clearTableBg(){
+    for(var i=0; i< cells.length; i++){
+        cells[i].classList.remove('bg-col');
+        cells[i].classList.remove('bg-active');
+        cells[i].parentNode.classList.remove('bg-row');
+    }
+}
+
+function setTableBgColumn(cellIdx){
+    for(var j=0; j<rows.length; j++){
+        rows[j].cells[cellIdx].classList.add('bg-col');
+    }
+}
+
+function setNumber(number){
+    if(selectedCell >=0 && selectedRow >=0){
+        rows[selectedRow].cells[selectedCell].innerText = number;
+        clearTableBg();
+        selectedCell = -1;
+        selectedRow = -1;
+    }
+}
