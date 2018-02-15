@@ -18,26 +18,34 @@
             <col span="2">
             <col class="border-right">
         </colgroup>
-        <tr v-for="i in [1,2,3,4,5,6,7,8,9]">
-          <td v-for="j in [1,2,3,4,5,6,7,8,9]" :class="[j%2>0?'':blockClass]"></td>
+        <!-- eslint-disable no-new "-->
+        <tr v-for="i in [0,1,2,3,4,5,6,7,8]">
+          <td v-for="j in [0,1,2,3,4,5,6,7,8]"  :class="[puzzle[i][j]===null?'':blockClass]">{{puzzle[i][j]}}</td>
         </tr>
     </table>
 </div>
 </template>
 
 <script>
+import {BoardService} from '../services/BoardService.js'
 export default {
   name: 'Board',
+  mounted(){
+let uiScript = document.createElement('script')
+    uiScript.setAttribute('src', '/static/ui.js')
+    document.head.appendChild(uiScript)
+  },
   data () {
     return {
       blockClass:'block',
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      puzzle: BoardService.getPuzzle()
     }
   },
   created() {
-    let uiScript = document.createElement('script')
-    uiScript.setAttribute('src', '/static/ui.js')
-    document.head.appendChild(uiScript)
+    // let uiScript = document.createElement('script')
+    // uiScript.setAttribute('src', '/static/ui.js')
+    // document.head.appendChild(uiScript)
   },
 }
 </script>

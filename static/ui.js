@@ -1,10 +1,8 @@
-'use strict';
-
-const table = document.querySelector('#tbl');
-const cells = table.querySelectorAll('td');
-const rows = table.querySelectorAll('tr');
-let selectedCell = -1;
-let selectedRow = -1;
+table = document.querySelector('#tbl');
+cells = table.querySelectorAll('td');
+rows = table.querySelectorAll('tr');
+selectedCell = -1;
+selectedRow = -1;
 
 (function(){
    for(var i=0; i< cells.length; i++){
