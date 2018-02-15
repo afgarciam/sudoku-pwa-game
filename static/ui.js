@@ -37,11 +37,15 @@ function setTableBgColumn(cellIdx){
     }
 }
 
-function setNumber(number){
+function setNumber(target){
     if(selectedCell >=0 && selectedRow >=0){
-        rows[selectedRow].cells[selectedCell].innerText = number;
-        clearTableBg();
-        selectedCell = -1;
-        selectedRow = -1;
+        rows[selectedRow].cells[selectedCell].innerText = target.innerText
+        var boardLocal = JSON.parse(window.localStorage.getItem('board'))
+        boardLocal[selectedRow][selectedCell] = parseInt(target.innerText)
+        window.localStorage.removeItem('board')
+        window.localStorage.setItem('board',JSON.stringify(boardLocal))
+        clearTableBg()
+        selectedCell = -1
+        selectedRow = -1
     }
 }
