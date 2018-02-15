@@ -42,7 +42,6 @@ function setNumber(target){
         rows[selectedRow].cells[selectedCell].innerText = target.innerText
         var boardLocal = JSON.parse(window.localStorage.getItem('board'))
         boardLocal[selectedRow][selectedCell] = parseInt(target.innerText)
-        window.localStorage.removeItem('board')
         window.localStorage.setItem('board',JSON.stringify(boardLocal))
         clearTableBg()
         selectedCell = -1

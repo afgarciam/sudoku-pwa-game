@@ -18,7 +18,6 @@ export const BoardService = {
   generatePuzzle() {
     let puzzle = sudoku.makepuzzle()
     let puzzleRate = sudoku.ratepuzzle(puzzle, 4)
-    let puzzleSolution = sudoku.solvepuzzle(puzzle)
 
     let object = {
       id: null,
@@ -27,7 +26,6 @@ export const BoardService = {
       updated: new Date().toISOString(),
       puzzleGenerated: puzzle,
       puzzleRate: puzzleRate,
-      puzzleSolution: puzzleSolution,
       puzzleBoard: puzzle
     }
 
@@ -47,15 +45,12 @@ export const BoardService = {
       firestore.collection(currentPuzzles).add(puzzle).then(docRef => {
         docRef.update({ id: docRef.id })
         puzzle.id = docRef.id
-        console.log(puzzle)
-        window.localStorage.removeItem('puzzle')
         window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
       })
     } else {
       puzzle.puzzleBoard = this.boardToSingleArray(JSON.parse(window.localStorage.getItem('board')))
       puzzle.updated = new Date().toISOString()
       firestore.collection(currentPuzzles).doc(puzzle.id).update(puzzle).then(docRef => {
-        window.localStorage.removeItem('puzzle')
         window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
       })
     }
