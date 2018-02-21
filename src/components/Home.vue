@@ -1,10 +1,10 @@
 <template>
 
   <div class="home">
-    <h1>SUDOKU</h1>
+    <h1 class="title">SUDOKU</h1>
     <div class="row justify-content-md-center">
       <div class="col-10 col-sm-10 col-md-6">
-        <button @click="play" class="btn btn-lg" >PLAY</button>
+        <button @click="play" class="btn btn-lg btn-play" >PLAY <i class="fas fa-play"></i></button>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
     },
     methods: {
       play:function (event) {
-        console.log('play pressed',event)
+        // console.log('play pressed',event)
         window.location.pathname = 'board'
       }
     },
@@ -42,7 +42,16 @@
 </script>
 
 <style scoped >
-  .home {
-
+  .home{
+     font-family:  Passero One;
+     color:#E37462;
+  }
+  .title {
+    font-size: 10rem;
+    margin: 0;
+  }
+  .btn-play{
+    font-size: 5rem;
+    color:#E37462;
   }
 </style>

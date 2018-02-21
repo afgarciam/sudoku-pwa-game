@@ -18,9 +18,8 @@ function clickCell(e){
     clearTableBg();
     e.target.parentNode.classList.add('bg-row');
     setTableBgColumn(e.target.cellIndex);
-    selectedCell = e.target.cellIndex;
-    selectedRow = e.target.parentNode.rowIndex;
-    rows[selectedRow].cells[selectedCell].classList.add('bg-active');
+    selectedCell = e.target.id;
+    e.target.classList.add('bg-active');
 }
 
 function clearTableBg(){
@@ -38,13 +37,13 @@ function setTableBgColumn(cellIdx){
 }
 
 function setNumber(target){
-    if(selectedCell >=0 && selectedRow >=0){
-        rows[selectedRow].cells[selectedCell].innerText = target.innerText
-        var boardLocal = JSON.parse(window.localStorage.getItem('board'))
-        boardLocal[selectedRow][selectedCell] = parseInt(target.innerText)
-        window.localStorage.setItem('board',JSON.stringify(boardLocal))
+    if(selectedCell >=0 ){
+        document.getElementById(selectedCell).innerText = target.innerText
+        var localPuzzle = JSON.parse(window.localStorage.getItem('puzzle'))
+        localPuzzle.board[selectedCell] = parseInt(target.innerText)
+        localPuzzle.updated = new Date().toISOString()
+        window.localStorage.setItem('puzzle',JSON.stringify(localPuzzle))
         clearTableBg()
         selectedCell = -1
-        selectedRow = -1
     }
 }

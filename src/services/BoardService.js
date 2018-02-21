@@ -8,7 +8,8 @@ export const BoardService = {
   getPuzzle() {
     let localPuzzle = window.localStorage.getItem('puzzle')
     if (localPuzzle) {
-      return this.boardFromSingleArray(JSON.parse(localPuzzle).puzzleBoard)
+      let localBoard = JSON.parse(localPuzzle)
+      return localBoard
     } else {
       return this.generatePuzzle()
     }
@@ -16,39 +17,39 @@ export const BoardService = {
 
   //generate new puzzle from sudoku library
   generatePuzzle() {
-    let puzzle = sudoku.makepuzzle()
+    let puzzleGenerated = sudoku.makepuzzle()
     let puzzleRate = sudoku.ratepuzzle(puzzle, 4)
 
-    let object = {
+    let puzzle = {
       id: null,
       user: null,
       generated: new Date().toISOString(),
       updated: new Date().toISOString(),
-      puzzleGenerated: puzzle,
-      puzzleRate: puzzleRate,
-      puzzleBoard: puzzle
+      puzzle: puzzleGenerated,
+      rate: puzzleRate,
+      board: puzzleGenerated.map(this.humanBoard)
     }
 
-    window.localStorage.setItem('puzzle', JSON.stringify(object))
+    window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
 
-    let board = this.boardFromSingleArray(object.puzzleGenerated)
-    window.localStorage.setItem('board', JSON.stringify(board))
+    // let board = this.boardFromSingleArray(object.puzzleGenerated)
+    // window.localStorage.setItem('board', JSON.stringify(board))
 
-    return board;
+    return puzzle;
   },
 
   //save current board on firebase
   savePuzzleRemote() {
     let puzzle = JSON.parse(window.localStorage.getItem('puzzle'))
     if (puzzle.id === null) {
-      puzzle.puzzleBoard = this.boardToSingleArray(JSON.parse(window.localStorage.getItem('board')))
+      // puzzle.puzzleBoard = this.boardToSingleArray(JSON.parse(window.localStorage.getItem('board')))
       firestore.collection(currentPuzzles).add(puzzle).then(docRef => {
         docRef.update({ id: docRef.id })
         puzzle.id = docRef.id
         window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
       })
     } else {
-      puzzle.puzzleBoard = this.boardToSingleArray(JSON.parse(window.localStorage.getItem('board')))
+      // puzzle.puzzleBoard = this.boardToSingleArray(JSON.parse(window.localStorage.getItem('board')))
       puzzle.updated = new Date().toISOString()
       firestore.collection(currentPuzzles).doc(puzzle.id).update(puzzle).then(docRef => {
         window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
@@ -90,5 +91,12 @@ export const BoardService = {
       }
     }
     return puzzleBoard
+  },
+
+  humanBoard(el){
+    if(el!= null){
+      el++;
+    }
+    return el
   }
 }

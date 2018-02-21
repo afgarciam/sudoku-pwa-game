@@ -11,9 +11,10 @@
             <col span="2">
             <col class="border-right">
         </colgroup>
-        <!-- eslint-disable no-new "-->
-        <tr v-for="i in [0,1,2,3,4,5,6,7,8]">
-          <td v-for="j in [0,1,2,3,4,5,6,7,8]"  :class="[puzzle[i][j]===null?'':blockClass]">{{puzzle[i][j]}}</td>
+        <tr v-for="i in [1,2,3,4,5,6,7,8,9]">
+          <td v-for="j in [8,7,6,5,4,3,2,1,0]" :id="((i*9)-j)-1" :class="[puzzle.puzzle[((i*9)-j)-1]===null?'':blockClass]">
+            {{puzzle.board[((i*9)-j)-1]}}
+          </td>
         </tr>
     </table>
     <div class="button-container">
@@ -29,7 +30,7 @@ export default {
   data() {
     return {
       blockClass: "block",
-      puzzle: BoardService.getPuzzle()
+       puzzle:BoardService.getPuzzle()
     };
   },
   created() {
