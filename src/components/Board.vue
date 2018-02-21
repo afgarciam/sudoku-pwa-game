@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="controls">
-      <button @click="savePuzzleRemote" class="btn">Save</button>
+      <button @click="savePuzzleRemote" class="btn btn-save">Save <i class="fa fa-save"></i> </button>
     </div>
     <hr>
     <table border="1" id="tbl" style="margin:auto;">
@@ -18,7 +18,7 @@
         </tr>
     </table>
     <div class="button-container">
-            <button onclick="setNumber(this)" class="btn" v-for="i in [1,2,3,4,5,6,7,8,9]">{{i}}</button>
+            <button onclick="setNumber(this)" class="btn btn-number" v-for="i in [1,2,3,4,5,6,7,8,9]">{{i}}</button>
     </div>
 </div>
 </template>
@@ -49,19 +49,20 @@ export default {
 
 <style scoped>
 .bg-row {
-  background-color: blanchedalmond;
+  background-color: #A2D8A7;
 }
 
 .bg-col {
-  background-color: blanchedalmond;
+  background-color: #A2D8A7;
 }
 
 .bg-active {
-  background-color: darkgoldenrod;
+  background-color: #B60050;
 }
 
 .block {
-  background-color: #ddd;
+  background-color: #675A69;
+  color: #F7FFE8 !important;
   cursor: not-allowed !important;
 }
 
@@ -69,17 +70,32 @@ export default {
   border-right: solid 2px #000 !important;
 }
 
+.btn-number{
+  font-family: Luckiest Guy;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 2px;
+  color: #E37462;
+}
+
+.btn-save{
+  font-family: Passero One;
+  font-size: 2.5rem;
+  color: #675A69;
+}
+
 .button-container {
-  width: 340px;
+  /* width: 360px; */
   margin: 20px auto;
 }
 
 #tbl tr td {
   cursor: pointer;
-  height: 40px;
-  text-align: center;
-  vertical-align: middle;
-  width: 40px;
+  font-family: Luckiest Guy;
+  font-size: 2rem;
+  line-height: 1;
+  padding: .5rem .8rem;
+  color: #E37462;
 }
 
 #tbl tr:nth-child(5),

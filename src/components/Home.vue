@@ -4,7 +4,7 @@
     <h1 class="title">SUDOKU</h1>
     <div class="row justify-content-md-center">
       <div class="col-10 col-sm-10 col-md-6">
-        <button @click="play" class="btn btn-lg btn-play" >PLAY <i class="fas fa-play"></i></button>
+        <button @click="play" class="btn btn-lg btn-play" >PLAY <i class="fa fa-play"></i></button>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
     methods: {
       play:function (event) {
         // console.log('play pressed',event)
-        window.location.pathname = 'board'
+        this.$router.push({path:'/board'})
       }
     },
     computed: {

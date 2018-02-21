@@ -1,7 +1,7 @@
 {
   "name": "sudoku-app-vue",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
+  "version": "0.1.0",
+  "description": "A Sudoku Game in Vue.js",
   "author": "Alex Garcia <lxfrnnd1988@gmail.com>",
   "private": true,
   "scripts": {
