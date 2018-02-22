@@ -53,6 +53,11 @@ export const BoardService = {
 
   },
 
+  resetBoard(){
+    let puzzle = JSON.parse(window.localStorage.getItem('puzzle'));
+    console.log(puzzle.puzzle)
+  },
+
   humanBoard(el){
     if(el!= null){
       el++;

@@ -1,9 +1,14 @@
 <template>
 <div>
+  <div class="row justify-content-sm-center">
     <div class="controls">
-      <button @click="savePuzzleRemote" class="btn btn-save">Save <i class="fa fa-save"></i> </button>
+      <button @click="savePuzzleRemote" class="btn btn-control"><i class="fa fa-save"></i> </button>
+      <button @click="resetBoard" class="btn btn-control"><i class="fa fa-recycle"></i> </button>
+      <button class="btn btn-control"><i class="fa fa-info"></i> </button>
     </div>
-    <hr>
+  </div>
+
+
     <table border="1" id="tbl" style="margin:auto;">
         <colgroup>
             <col span="2">
@@ -17,8 +22,10 @@
           </td>
         </tr>
     </table>
-    <div class="button-container">
+    <div class="row justify-content-center">
+      <div class="button-container btn-group" role="group">
             <button onclick="setNumber(this)" class="btn btn-number" v-for="i in [1,2,3,4,5,6,7,8,9]">{{i}}</button>
+      </div>
     </div>
 </div>
 </template>
@@ -30,7 +37,7 @@ export default {
   data() {
     return {
       blockClass: "block",
-       puzzle:BoardService.getPuzzle()
+      puzzle:BoardService.getPuzzle()
     };
   },
   created() {
@@ -40,8 +47,11 @@ export default {
   },
   methods:{
     savePuzzleRemote:function(event){
-      console.log('save puzzle on firebase')
       BoardService.savePuzzleRemote()
+    },
+    resetBoard:function(event){
+     this.puzzle = BoardService.generatePuzzle()
+
     }
   }
 };
@@ -49,57 +59,69 @@ export default {
 
 <style scoped>
 .bg-row {
-  background-color: #A2D8A7;
+  background-color: #F7FFE8;
 }
 
 .bg-col {
-  background-color: #A2D8A7;
+  background-color: #F7FFE8;
 }
 
 .bg-active {
-  background-color: #B60050;
+  background-color: #E37462 ;
+  color: #B60050;
 }
 
 .block {
-  background-color: #675A69;
-  color: #F7FFE8 !important;
+  background-color: #ddd;
+  color: #675A69 !important;
   cursor: not-allowed !important;
 }
 
 .border-right {
-  border-right: solid 2px #000 !important;
+  border-right: solid 2px #675A69 !important;
 }
 
 .btn-number{
   font-family: Luckiest Guy;
+  color: #E37462;
   font-size: 1.5rem;
-  line-height: 1;
-  margin: 2px;
+  height: 40px;
+  vertical-align:middle;
+}
+
+.btn-control{
+  font-family: Passero One;
+  font-size: 1rem;
   color: #E37462;
 }
 
-.btn-save{
-  font-family: Passero One;
-  font-size: 2.5rem;
-  color: #675A69;
+.button-container {
+  margin-top: 5px;
 }
 
-.button-container {
-  /* width: 360px; */
-  margin: 20px auto;
+
+.controls{
+  margin: 10px auto;
 }
 
 #tbl tr td {
   cursor: pointer;
   font-family: Luckiest Guy;
-  font-size: 2rem;
+  font-size: 1.5rem;
   line-height: 1;
-  padding: .5rem .8rem;
+  height: 40px;
+  width: 40px;
   color: #E37462;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#tbl{
+  margin: auto;
 }
 
 #tbl tr:nth-child(5),
 tr:nth-child(8) {
-  border-top: solid 2px #000;
+  border-top: solid 2px #675A69;
 }
 </style>

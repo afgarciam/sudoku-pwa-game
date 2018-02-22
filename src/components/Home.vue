@@ -3,8 +3,8 @@
   <div class="home">
     <h1 class="title">SUDOKU</h1>
     <div class="row justify-content-md-center">
-      <div class="col-10 col-sm-10 col-md-6">
-        <button @click="play" class="btn btn-lg btn-play" >PLAY <i class="fa fa-play"></i></button>
+      <div class="col-12 col-sm-12 col-md-6">
+        <button @click="play" class="btn btn-lg btn-play btn-block" >PLAY <i class="fa fa-play"></i></button>
       </div>
     </div>
   </div>
@@ -47,11 +47,12 @@
      color:#E37462;
   }
   .title {
-    font-size: 10rem;
-    margin: 0;
+    font-size: 3rem;
+    text-align: center;
+    margin: 2rem 0;
   }
   .btn-play{
-    font-size: 5rem;
+    font-size: 2rem;
     color:#E37462;
   }
 </style>
