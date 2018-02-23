@@ -3,7 +3,6 @@
   <div class="row justify-content-sm-center">
     <div class="controls">
       <button class="btn btn-control" onclick="unsetNumber()"><i class="fa fa-eraser"></i> </button>
-      <button @click="goHome" class="btn btn-control"><i class="fa fa-home"></i> </button>
       <button @click="savePuzzleRemote" class="btn btn-control"><i class="fa fa-save"></i> </button>
       <button @click="resetBoard" class="btn btn-control"><i class="fa fa-recycle"></i> </button>
     </div>
@@ -35,6 +34,9 @@
 import { BoardService } from "../services/BoardService.js"
 export default {
   name: "Board",
+  mounted(){
+     this.$parent.setTitle('Board')
+  },
   data() {
     return {
       blockClass: "block",
@@ -52,9 +54,6 @@ export default {
     },
     resetBoard:function(event){
      this.puzzle = BoardService.generatePuzzle()
-    },
-    goHome:function(event){
-      this.$router.push({path:'/'})
     }
   }
 };
@@ -71,12 +70,12 @@ export default {
 
 .bg-active {
   background-color: #E37462 ;
-  color:#F7FFE8 !important ;
+  color:#F7FFE8 ;
 }
 
 .block {
-  background-color: #ddd;
-  color: #675A69 !important;
+  background-color: rgba(0, 0, 0, .3);
+  color: #F7FFE8!important;
   cursor: not-allowed !important;
 }
 

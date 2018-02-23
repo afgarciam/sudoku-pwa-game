@@ -1,7 +1,7 @@
 <template>
 
   <section class="profile">
-    <h1>profile Component</h1>
+    <h1>User Info</h1>
   </section>
 
 </template>
@@ -10,9 +10,9 @@
   export default  {
     name: 'profile',
     props: [],
-    mounted() {
-
-    },
+     mounted(){
+     this.$parent.setTitle('Profile')
+  },
     data() {
       return {
 

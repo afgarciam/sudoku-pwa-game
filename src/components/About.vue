@@ -1,7 +1,8 @@
 <template>
 
   <section class="about">
-    <h1>about Component</h1>
+    <h1>Sudoku</h1>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum aliquid eius consequuntur vitae labore magnam ut quo sint. Delectus dolores ea laudantium sed earum necessitatibus explicabo illum quibusdam quos a facilis, officiis fuga nostrum minima sequi corporis ratione vel architecto reiciendis accusamus laborum maiores repellat officia nihil. Dolore, nulla nesciunt?</p>
   </section>
 
 </template>
@@ -10,8 +11,8 @@
   export default  {
     name: 'about',
     props: [],
-    mounted() {
-
+     mounted(){
+     this.$parent.setTitle('About')
     },
     data() {
       return {

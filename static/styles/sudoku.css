@@ -5,3 +5,14 @@ body{
   background-color:#a2d8a7;
   font-family: Passero One;
 }
+
+.btn{
+  background-color: #F7FFE8 !important;
+  color: #E37462;
+}
+h1,h2,h3,h4{
+  color: #E37462;
+}
+p{
+  color: #F7FFE8;
+}
