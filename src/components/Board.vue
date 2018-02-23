@@ -2,9 +2,10 @@
 <div>
   <div class="row justify-content-sm-center">
     <div class="controls">
+      <button class="btn btn-control" onclick="unsetNumber()"><i class="fa fa-eraser"></i> </button>
+      <button @click="goHome" class="btn btn-control"><i class="fa fa-home"></i> </button>
       <button @click="savePuzzleRemote" class="btn btn-control"><i class="fa fa-save"></i> </button>
       <button @click="resetBoard" class="btn btn-control"><i class="fa fa-recycle"></i> </button>
-      <button class="btn btn-control"><i class="fa fa-info"></i> </button>
     </div>
   </div>
 
@@ -51,7 +52,9 @@ export default {
     },
     resetBoard:function(event){
      this.puzzle = BoardService.generatePuzzle()
-
+    },
+    goHome:function(event){
+      this.$router.push({path:'/'})
     }
   }
 };
@@ -68,7 +71,7 @@ export default {
 
 .bg-active {
   background-color: #E37462 ;
-  color: #B60050;
+  color:#F7FFE8 !important ;
 }
 
 .block {
@@ -109,16 +112,14 @@ export default {
   font-family: Luckiest Guy;
   font-size: 1.5rem;
   line-height: 1;
-  height: 40px;
+  height: 35px;
   width: 40px;
   color: #E37462;
   text-align: center;
   vertical-align: middle;
 }
 
-#tbl{
-  margin: auto;
-}
+
 
 #tbl tr:nth-child(5),
 tr:nth-child(8) {

@@ -47,3 +47,16 @@ function setNumber(target){
         selectedCell = -1
     }
 }
+
+
+function unsetNumber(){
+  if(selectedCell >=0 ){
+      document.getElementById(selectedCell).innerText = ''
+      var localPuzzle = JSON.parse(window.localStorage.getItem('puzzle'))
+      localPuzzle.board[selectedCell] = null;
+      localPuzzle.updated = new Date().toISOString()
+      window.localStorage.setItem('puzzle',JSON.stringify(localPuzzle))
+      clearTableBg()
+      selectedCell = -1
+  }
+}
