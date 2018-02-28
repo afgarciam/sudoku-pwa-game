@@ -60,10 +60,30 @@ export const BoardService = {
   },
 
   checkBoard(){
-    let currentPuzzle = JSON.parse(localStorage.getItem(puzzle))
+    let currentPuzzle = JSON.parse(localStorage.getItem('puzzle'))
     let currentBoard = currentPuzzle.board
-    let solvedCurrenPuzzle = sudoku.solvepuzzle(currentPuzzle.puzzle)
-    console.log('current solution ',solvedCurrenPuzzle)
+    let solvedCurrentPuzzle = sudoku.solvepuzzle(currentPuzzle.puzzle).map(this.humanBoard)
+    let correct = true
+
+    if(currentBoard.includes(null)){
+      alert('Board is incomplete')
+    }else{
+      currentBoard.every((v,i)=>{
+        if(v != solvedCurrentPuzzle[i]){
+          correct = false
+          return
+        }
+      })
+
+      if(!correct){
+        alert('Board solution is incorrect :(')
+      }else{
+        alert('YEAH!...Board solution is correct :D')
+      }
+    }
+
+
+
   },
 
   resetBoard(){

@@ -5,6 +5,7 @@
       <button class="btn btn-control" onclick="unsetNumber()"><i class="fa fa-eraser"></i> </button>
       <button @click="savePuzzleRemote" class="btn btn-control"><i class="fa fa-save"></i> </button>
       <button @click="resetBoard" class="btn btn-control"><i class="fa fa-recycle"></i> </button>
+      <button @click="checkBoard" class="btn btn-control"> <i class="fa fa-check"></i> </button>
     </div>
   </div>
 
@@ -44,7 +45,7 @@ export default {
     };
   },
   created() {
-     let uiScript = document.createElement("script")
+    let uiScript = document.createElement("script")
     uiScript.setAttribute("src", "/static/ui.js")
     document.head.appendChild(uiScript)
   },
@@ -54,6 +55,9 @@ export default {
     },
     resetBoard:function(event){
      this.puzzle = BoardService.generatePuzzle()
+    },
+    checkBoard:function(event){
+      BoardService.checkBoard()
     }
   }
 };
@@ -70,7 +74,7 @@ export default {
 
 .bg-active {
   background-color: #E37462 ;
-  color:#F7FFE8 ;
+  color:#F7FFE8 !important;
 }
 
 .block {
@@ -117,8 +121,6 @@ export default {
   text-align: center;
   vertical-align: middle;
 }
-
-
 
 #tbl tr:nth-child(5),
 tr:nth-child(8) {
