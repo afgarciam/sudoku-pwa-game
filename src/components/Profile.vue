@@ -15,7 +15,7 @@
 
     <div id="register" v-if="register">
        <h1>Register</h1>
-    <form @submit.prevent="setOrUpdateUser">
+    <form @submit.prevent="setUser">
       <div class="row">
         <div class="col-12 form-group">
           <label for="email" class="d-none d-md-block">Email</label>
@@ -76,26 +76,14 @@
      this.$parent.setTitle('Profile')
     },
     methods: {
-      setOrUpdateUser:function (event) {
-         if(!this.register){
+      setUser:function (event) {
            UsersService.register({
            firstName: this.firstName,
            lastName: this.lastName,
            email: this.email,
            nick: this.nick
           })
-         }else{
-            UsersService.update({
-           firstName: this.firstName,
-           lastName: this.lastName,
-           email: this.email,
-           nick: this.nick
-          })
-         }
-
-      },
-      getUser:function(){
-
+        this.$router.push({path:'/board'})
       },
       checkEmail:function(){
         this.register = !UsersService.checkEmail(this.emailChek)

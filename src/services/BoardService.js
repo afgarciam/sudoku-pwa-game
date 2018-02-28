@@ -6,7 +6,7 @@ const currentPuzzles = 'currentPuzzles'
 
 export const BoardService = {
   getPuzzle() {
-    let localPuzzle = window.localStorage.getItem('puzzle')
+    let localPuzzle = localStorage.getItem('puzzle')
     if (localPuzzle) {
       let localBoard = JSON.parse(localPuzzle)
       return localBoard
@@ -18,11 +18,12 @@ export const BoardService = {
   //generate new puzzle from sudoku library
   generatePuzzle() {
     let puzzleGenerated = sudoku.makepuzzle()
-    let puzzleRate = sudoku.ratepuzzle(puzzle, 4)
+    let puzzleRate = sudoku.ratepuzzle(puzzle, 1)
+    let userId = localStorage.getItem('userId') ? localStorage.getItem('userId'):null
 
     let puzzle = {
       id: null,
-      user: null,
+      user: userId,
       generated: new Date().toISOString(),
       updated: new Date().toISOString(),
       puzzle: puzzleGenerated,
@@ -30,27 +31,39 @@ export const BoardService = {
       board: puzzleGenerated.map(this.humanBoard)
     }
 
-    window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
+    localStorage.setItem('puzzle', JSON.stringify(puzzle))
 
     return puzzle;
   },
 
   //save current board on firebase
   savePuzzleRemote() {
-    let puzzle = JSON.parse(window.localStorage.getItem('puzzle'))
+    let puzzle = JSON.parse(localStorage.getItem('puzzle'))
+    let userId = localStorage.getItem('userId')
+    puzzle.userId = userId
     if (puzzle.id === null) {
       firestore.collection(currentPuzzles).add(puzzle).then(docRef => {
         docRef.update({ id: docRef.id })
         puzzle.id = docRef.id
-        window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
+        puzzle.user = userId
+        localStorage.setItem('puzzle', JSON.stringify(puzzle))
+        alert('Puzzle save success')
       })
     } else {
       puzzle.updated = new Date().toISOString()
       firestore.collection(currentPuzzles).doc(puzzle.id).update(puzzle).then(docRef => {
-        window.localStorage.setItem('puzzle', JSON.stringify(puzzle))
+        puzzle.user = userId
+        localStorage.setItem('puzzle', JSON.stringify(puzzle))
+        alert('Puzzle update success')
       })
     }
+  },
 
+  checkBoard(){
+    let currentPuzzle = JSON.parse(localStorage.getItem(puzzle))
+    let currentBoard = currentPuzzle.board
+    let solvedCurrenPuzzle = sudoku.solvepuzzle(currentPuzzle.puzzle)
+    console.log('current solution ',solvedCurrenPuzzle)
   },
 
   resetBoard(){

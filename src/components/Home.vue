@@ -38,7 +38,11 @@
     },
     methods: {
       play:function (event) {
-        this.$router.push({path:'/board'})
+        if(!UsersService.needCheck()){
+          this.$router.push({path:'/profile'})
+        }else{
+          this.$router.push({path:'/board'})
+        }
       },
       goTo:function(route){
         this.$router.push({path:`/${route}`})

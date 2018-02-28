@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="row justify-content-center navigation">
-      <div class="col-2"> <a onclick="window.history.back()" v-if="navigate"><i class="fa fa-arrow-left"></i> </a></div>
+      <div class="col-2"> <a @click="goHome" v-if="navigate"><i class="fa fa-arrow-left"></i> </a></div>
       <div class="col-10 text-right">
         <span class="title">{{title}}</span>
       </div>
@@ -23,6 +23,9 @@ export default {
     setTitle(title, navigate=true){
       this.title = title
       this.navigate = navigate
+    },
+    goHome(){
+      this.$router.push({path:'/'})
     }
   }
 }
