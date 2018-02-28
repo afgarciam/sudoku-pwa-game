@@ -1,25 +1,106 @@
 <template>
 
   <section class="profile">
-    <h1>User Info</h1>
+    <div id="check" v-if="!checked">
+      <h1>Vefiry you Email</h1>
+      <form @submit.prevent="checkEmail">
+        <div class="col-12 form-group">
+          <label for="emailChek" class="d-none d-md-block">Email</label>
+          <input type="emailChek" name="emailChek" id="emailChek" v-model="emailChek" class="form-control" required placeholder="Email">
+        </div>
+         <button type="submit" class="btn btn-lg btn-block">Verify</button>
+      </form>
+
+    </div>
+
+    <div id="register" v-if="register">
+       <h1>Register</h1>
+    <form @submit.prevent="setOrUpdateUser">
+      <div class="row">
+        <div class="col-12 form-group">
+          <label for="email" class="d-none d-md-block">Email</label>
+          <input type="email" name="email" id="email" v-model="email" class="form-control" required placeholder="Email">
+        </div>
+        <div class="col-12 form-group">
+          <label for="firstName"  class="d-none d-md-block">First Name</label>
+          <input type="text" name="firstName" id="firstName" v-model="firstName" class="form-control" required placeholder="First Name">
+        </div>
+        <div class="col-12 form-group">
+          <label for="lastName" class="d-none d-md-block">Last name</label>
+          <input type="text" name="lastName" id="lastName" v-model="lastName" class="form-control" placeholder="Last Name" >
+        </div>
+        <div class="col-12 form-group">
+          <label for="nick"  class="d-none d-md-block">Nick</label>
+          <input type="text" name="nick" id="nick" v-model="nick" class="form-control" placeholder="Nick">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-lg btn-block">Register</button>
+    </form>
+    </div>
+
+
   </section>
 
 </template>
 
 <script lang="js">
+  import { UsersService } from "../services/UsersService.js";
   export default  {
     name: 'profile',
-    props: [],
-     mounted(){
-     this.$parent.setTitle('Profile')
-  },
+    props:[],
     data() {
       return {
-
+        checked:false,
+        register:false,
+        emailChek:"",
+        firstName:"",
+        lastName:"",
+        email:"",
+        nick:""
       }
     },
+    beforeMount(){
+      this.checked = UsersService.needCheck()
+     if(this.checked){
+       UsersService.get().then(u=>{
+        this.register = true
+        let user = u.data()
+         this.firstName = user.firstName
+         this.lastName = user.lastName
+         this.email = user.email
+         this.nick = user.nick
+       })
+     }
+    },
+    mounted(){
+     this.$parent.setTitle('Profile')
+    },
     methods: {
+      setOrUpdateUser:function (event) {
+         if(!this.register){
+           UsersService.register({
+           firstName: this.firstName,
+           lastName: this.lastName,
+           email: this.email,
+           nick: this.nick
+          })
+         }else{
+            UsersService.update({
+           firstName: this.firstName,
+           lastName: this.lastName,
+           email: this.email,
+           nick: this.nick
+          })
+         }
 
+      },
+      getUser:function(){
+
+      },
+      checkEmail:function(){
+        this.register = !UsersService.checkEmail(this.emailChek)
+        this.checked = !this.register
+      }
     },
     computed: {
 
@@ -28,7 +109,6 @@
 </script>
 
 <style scoped>
-  .profile {
-
-  }
+.profile {
+}
 </style>
