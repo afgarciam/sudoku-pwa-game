@@ -5,10 +5,14 @@ selectedCell = -1;
 selectedRow = -1;
 
 (function(){
-   for(var i=0; i< cells.length; i++){
-       cells[i].addEventListener('click', clickCell);
-   }
+initUI()
 }())
+
+function initUI(){
+  for(var i=0; i< cells.length; i++){
+    cells[i].addEventListener('click', clickCell);
+}
+}
 
 function clickCell(e){
     if(e.target.classList.contains('block')){

@@ -14,6 +14,7 @@
     "firebase": "^4.9.1",
     "sudoku": "0.0.2",
     "vue": "^2.5.2",
+    "vue-offline-preloader": "0.0.5",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

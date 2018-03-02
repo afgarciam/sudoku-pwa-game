@@ -10,14 +10,14 @@
   </div>
 
 
-    <table border="1" id="tbl" style="margin:auto;">
+    <table border="1" id="tbl" style="margin:auto;" v-if="renderTable">
         <colgroup>
             <col span="2">
             <col class="border-right">
             <col span="2">
             <col class="border-right">
         </colgroup>
-        <tr v-for="i in [1,2,3,4,5,6,7,8,9]">
+        <tr v-for="i in arrNumbers">
           <td v-for="j in [8,7,6,5,4,3,2,1,0]" :id="((i*9)-j)-1" :class="[puzzle.puzzle[((i*9)-j)-1]===null?'':blockClass]">
             {{puzzle.board[((i*9)-j)-1]}}
           </td>
@@ -35,31 +35,35 @@
 import { BoardService } from "../services/BoardService.js"
 export default {
   name: "Board",
+  beforeCreate: async function(){
+    await BoardService.getPuzzle().then(val => {
+        console.log('resolve promise')
+        let data = val.docs[0].data()
+        data.id = val.docs[0].id
+        localStorage.setItem('puzzle', JSON.stringify(data))
+      }).catch(err => {
+        console.log('no resolve promise')
+        let data = BoardService.generatePuzzle()
+        localStorage.setItem('puzzle', JSON.stringify(data))
+      })
+      this.puzzle = JSON.parse(localStorage.getItem('puzzle'))
+      this.renderTable = true;
+      console.log('render table true')
+      let uiScript = document.createElement("script")
+      uiScript.setAttribute("src", "/static/ui.js")
+      document.body.appendChild(uiScript)
+  },
   mounted(){
-     this.$parent.setTitle('Board')
+    this.$parent.setTitle('Board')
+
   },
   data() {
     return {
       blockClass: "block",
-      puzzle:{}
+      puzzle:JSON.parse(localStorage.getItem('puzzle')),
+      arrNumbers:[1,2,3,4,5,6,7,8,9],
+      renderTable:false
     };
-  },
-  created() {
-     BoardService.getPuzzle().then(val => {
-      console.log('resolve promise')
-      let data = val.docs[0].data()
-      data.id = val.docs[0].id
-      localStorage.setItem('puzzle', JSON.stringify(data))
-      this.puzzle = data
-    }).catch(err => {
-      console.log('no resolve promise')
-      let data = BoardService.generatePuzzle()
-      localStorage.setItem('puzzle', JSON.stringify(data))
-      this.puzzle = data
-    })
-    let uiScript = document.createElement("script")
-    uiScript.setAttribute("src", "/static/ui.js")
-    document.head.appendChild(uiScript)
   },
   methods:{
     savePuzzleRemote:function(event){
@@ -70,6 +74,12 @@ export default {
     },
     checkBoard:function(event){
       BoardService.checkBoard()
+    },
+    loadGame: async function(){
+
+
+      console.log('after work await')
+
     }
   }
 };

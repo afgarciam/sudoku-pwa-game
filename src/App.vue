@@ -1,5 +1,7 @@
 <template>
+
   <div id="app">
+
     <div class="row justify-content-center navigation">
       <div class="col-2"> <a @click="goHome" v-if="navigate"><i class="fa fa-arrow-left"></i> </a></div>
       <div class="col-10 text-right">
