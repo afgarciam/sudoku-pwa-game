@@ -41,10 +41,22 @@ export default {
   data() {
     return {
       blockClass: "block",
-      puzzle:BoardService.getPuzzle()
+      puzzle:{}
     };
   },
   created() {
+     BoardService.getPuzzle().then(val => {
+      console.log('resolve promise')
+      let data = val.docs[0].data()
+      data.id = val.docs[0].id
+      localStorage.setItem('puzzle', JSON.stringify(data))
+      this.puzzle = data
+    }).catch(err => {
+      console.log('no resolve promise')
+      let data = BoardService.generatePuzzle()
+      localStorage.setItem('puzzle', JSON.stringify(data))
+      this.puzzle = data
+    })
     let uiScript = document.createElement("script")
     uiScript.setAttribute("src", "/static/ui.js")
     document.head.appendChild(uiScript)

@@ -6,20 +6,15 @@ const currentPuzzles = 'currentPuzzles'
 
 export const BoardService = {
   getPuzzle() {
-    let localPuzzle = localStorage.getItem('puzzle')
-    if (localPuzzle) {
-      let localBoard = JSON.parse(localPuzzle)
-      return localBoard
-    } else {
-      return this.generatePuzzle()
-    }
+    let userId = localStorage.getItem('userId')
+    return firestore.collection('currentPuzzles').where('user', '==', userId).get()
   },
 
   //generate new puzzle from sudoku library
   generatePuzzle() {
     let puzzleGenerated = sudoku.makepuzzle()
     let puzzleRate = sudoku.ratepuzzle(puzzle, 1)
-    let userId = localStorage.getItem('userId') ? localStorage.getItem('userId'):null
+    let userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : null
 
     let puzzle = {
       id: null,
@@ -40,7 +35,7 @@ export const BoardService = {
   savePuzzleRemote() {
     let puzzle = JSON.parse(localStorage.getItem('puzzle'))
     let userId = localStorage.getItem('userId')
-    puzzle.userId = userId
+    puzzle.user = userId
     if (puzzle.id === null) {
       firestore.collection(currentPuzzles).add(puzzle).then(docRef => {
         docRef.update({ id: docRef.id })
@@ -59,25 +54,25 @@ export const BoardService = {
     }
   },
 
-  checkBoard(){
+  checkBoard() {
     let currentPuzzle = JSON.parse(localStorage.getItem('puzzle'))
     let currentBoard = currentPuzzle.board
     let solvedCurrentPuzzle = sudoku.solvepuzzle(currentPuzzle.puzzle).map(this.humanBoard)
     let correct = true
 
-    if(currentBoard.includes(null)){
+    if (currentBoard.includes(null)) {
       alert('Board is incomplete')
-    }else{
-      currentBoard.every((v,i)=>{
-        if(v != solvedCurrentPuzzle[i]){
+    } else {
+      currentBoard.every((v, i) => {
+        if (v != solvedCurrentPuzzle[i]) {
           correct = false
           return
         }
       })
 
-      if(!correct){
+      if (!correct) {
         alert('Board solution is incorrect :(')
-      }else{
+      } else {
         alert('YEAH!...Board solution is correct :D')
       }
     }
@@ -86,13 +81,13 @@ export const BoardService = {
 
   },
 
-  resetBoard(){
+  resetBoard() {
     let puzzle = JSON.parse(window.localStorage.getItem('puzzle'));
     console.log(puzzle.puzzle)
   },
 
-  humanBoard(el){
-    if(el!= null){
+  humanBoard(el) {
+    if (el != null) {
       el++;
     }
     return el
