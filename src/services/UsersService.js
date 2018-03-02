@@ -9,7 +9,7 @@ export const UsersService = {
   register(user){
     let reg;
     let id = localStorage.getItem('userId')
-    if(!id){
+    if(!id && !userToUpdate){
       reg = firestore.collection('users').add(user).then(res =>{
         localStorage.setItem('userId',res.id)
         alert('User registered success!')
@@ -28,11 +28,7 @@ export const UsersService = {
     return localStorage.getItem('userId') != undefined;
   },
 
-  checkEmail(email){
-    var exists =false
-    firestore.collection('users').where('email','==',email).get().then(val=>{
-     exists = val.empty
-    })
-    return exists
+  emailRegistered(email){
+    return firestore.collection('users').where('email','==',email).get()
   }
 }

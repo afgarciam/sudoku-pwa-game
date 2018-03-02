@@ -34,7 +34,7 @@
           <input type="text" name="nick" id="nick" v-model="nick" class="form-control" placeholder="Nick">
         </div>
       </div>
-      <button type="submit" class="btn btn-lg btn-block">Register</button>
+      <input type="submit" class="btn btn-lg btn-block" :value="registerAction" />
     </form>
     </div>
 
@@ -52,11 +52,12 @@
       return {
         checked:false,
         register:false,
-        emailChek:"",
-        firstName:"",
-        lastName:"",
-        email:"",
-        nick:""
+        emailChek:'',
+        firstName:'',
+        lastName:'',
+        email:'',
+        nick:'',
+        registerAction:'Register'
       }
     },
     beforeMount(){
@@ -86,8 +87,21 @@
         this.$router.push({path:'/board'})
       },
       checkEmail:function(){
-        this.register = !UsersService.checkEmail(this.emailChek)
-        this.checked = !this.register
+        UsersService.emailRegistered(this.emailChek).then(val=>{
+           this.register = !val.empty
+           let data = val.docs[0].data()
+           this.firstName = data.firstName
+           this.lastName = data.lastName
+           this.email = data.email
+           this.nick = data.nick
+           localStorage.setItem('userId', val.docs[0].id)
+           this.registerAction = 'Update'
+        }).catch(err =>{
+          this.register = true
+          console.error(err)
+        })
+
+        this.checked = true;
       }
     },
     computed: {
