@@ -1,1 +1,0 @@
-./node_modules/vue-offline-preloader/src/worker.js

@@ -23,7 +23,9 @@
     props: [],
     mounted() {
       this.$parent.setTitle('Home',false)
-
+        let uiScript = document.createElement("script")
+      uiScript.setAttribute("src", "/static/worker.js")
+      document.body.appendChild(uiScript)
     //  const users = UsersService.getAll()
     //  users.then((u)=>{
     //    u.docs.forEach(user => {

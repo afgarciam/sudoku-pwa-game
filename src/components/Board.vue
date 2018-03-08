@@ -37,18 +37,15 @@ export default {
   name: "Board",
   beforeCreate: async function(){
     await BoardService.getPuzzle().then(val => {
-        console.log('resolve promise')
         let data = val.docs[0].data()
         data.id = val.docs[0].id
         localStorage.setItem('puzzle', JSON.stringify(data))
       }).catch(err => {
-        console.log('no resolve promise')
         let data = BoardService.generatePuzzle()
         localStorage.setItem('puzzle', JSON.stringify(data))
       })
       this.puzzle = JSON.parse(localStorage.getItem('puzzle'))
       this.renderTable = true;
-      console.log('render table true')
       let uiScript = document.createElement("script")
       uiScript.setAttribute("src", "/static/ui.js")
       document.body.appendChild(uiScript)
