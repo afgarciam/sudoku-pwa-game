@@ -73,11 +73,6 @@ export default {
     checkBoard:function(event){
       BoardService.checkBoard()
     },
-    setCellEvent:function(event){
-        for (var i = 0; i < cells.length; i++) {
-          cells[i].addEventListener('@click', clickCell);
-        }
-    },
     clickCell:function(event){
         if (event.target.classList.contains('block')) {
           return;
